@@ -2,14 +2,17 @@
 package lab3.dcc;
 
 import java.awt.BorderLayout;
+import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 
@@ -28,14 +31,23 @@ class JanelaLista extends JFrame{
         pnlEntrada.add(btnNumero, BorderLayout.EAST);
         
         add(pnlEntrada, BorderLayout.NORTH);
-        add(lstNumeros, BorderLayout.CENTER);
+        add(new JScrollPane(lstNumeros), BorderLayout.CENTER);
         
         btnNumero.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultListModel<Integer> modelo = (DefaultListModel<Integer>)lstNumeros.getModel();
-                modelo.addElement(Integer.parseInt(txtNumero.getText()));
+                try{
+                         modelo.addElement(Integer.parseInt(txtNumero.getText()));   
+                }
+
+                catch (NumberFormatException ex) 
+                {
+                    System.out.println("Corrija!");
+                }
+                txtNumero.setText("");
+                txtNumero.requestFocus();
             }
         });
     }
